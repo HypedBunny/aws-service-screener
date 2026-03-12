@@ -1,0 +1,158 @@
+{
+    "ecsContainerInsights": {
+        "category": "O",
+        "^description": "Container Insights not enabled: {$COUNT} of your ECS clusters do not have Container Insights enabled. Enable Container Insights to collect and aggregate metrics and logs for monitoring, troubleshooting, and operational visibility.",
+        "shortDesc": "Enable Container Insights on cluster",
+        "criticality": "M",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 1,
+        "needFullTest": 0,
+        "ref": [
+            "[ECS Container Insights]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-container-insights.html>"
+        ]
+    },
+    "ecsTaskDefinitionLogging": {
+        "category": "O",
+        "^description": "Logging not configured: {$COUNT} of your ECS task definitions have containers without log configuration. Configure logging (e.g., awslogs driver) to capture container stdout/stderr for debugging and audit.",
+        "shortDesc": "Configure container logging",
+        "criticality": "H",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 1,
+        "needFullTest": 0,
+        "ref": [
+            "[ECS Logging]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/using_awslogs.html>"
+        ]
+    },
+    "ecsTaskDefinitionRootUser": {
+        "category": "S",
+        "^description": "Running as root: {$COUNT} of your ECS task definitions have containers configured to run as the root user. Running containers as a non-root user reduces the attack surface and limits the impact of container breakout vulnerabilities.",
+        "shortDesc": "Avoid running containers as root",
+        "criticality": "H",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 0,
+        "needFullTest": 1,
+        "ref": [
+            "[ECS Security Best Practices]<https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/security-tasks-containers.html>"
+        ]
+    },
+    "ecsTaskDefinitionReadonlyRoot": {
+        "category": "S",
+        "^description": "Writable root filesystem: {$COUNT} of your ECS task definitions have containers without a read-only root filesystem. Enabling readonlyRootFilesystem prevents malicious processes from writing to the container filesystem, reducing the risk of tampering.",
+        "shortDesc": "Enable read-only root filesystem",
+        "criticality": "M",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 0,
+        "needFullTest": 1,
+        "ref": [
+            "[ECS Task Definition Parameters]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html>"
+        ]
+    },
+    "ecsTaskDefinitionNoSecrets": {
+        "category": "S",
+        "^description": "Hardcoded secrets: {$COUNT} of your ECS task definitions have containers with environment variables that may contain secrets (passwords, keys). Use AWS Secrets Manager or SSM Parameter Store instead of plaintext environment variables.",
+        "shortDesc": "Use Secrets Manager instead of env vars",
+        "criticality": "H",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 0,
+        "needFullTest": 1,
+        "ref": [
+            "[ECS Specifying Sensitive Data]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/specifying-sensitive-data.html>"
+        ]
+    },
+    "ecsServiceDesiredCount": {
+        "category": "R",
+        "^description": "Single task running: {$COUNT} of your ECS services have a desired count of 1 or fewer. Running multiple tasks across Availability Zones improves availability and fault tolerance.",
+        "shortDesc": "Run multiple tasks for availability",
+        "criticality": "M",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 1,
+        "needFullTest": 0,
+        "ref": [
+            "[ECS Service Auto Scaling]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html>"
+        ]
+    },
+    "ecsServiceCircuitBreaker": {
+        "category": "R",
+        "^description": "No circuit breaker: {$COUNT} of your ECS services do not have deployment circuit breaker enabled. The circuit breaker automatically rolls back unhealthy deployments, preventing failed deployments from consuming resources.",
+        "shortDesc": "Enable deployment circuit breaker",
+        "criticality": "M",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 0,
+        "needFullTest": 0,
+        "ref": [
+            "[ECS Deployment Circuit Breaker]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-circuit-breaker.html>"
+        ]
+    },
+    "ecsServiceNetworkAwsvpc": {
+        "category": "S",
+        "^description": "Not using awsvpc network mode: {$COUNT} of your ECS services use task definitions without the awsvpc network mode. The awsvpc mode gives each task its own ENI and security group, enabling fine-grained network access control.",
+        "shortDesc": "Use awsvpc network mode",
+        "criticality": "H",
+        "downtime": 1,
+        "slowness": 0,
+        "additionalCost": 0,
+        "needFullTest": 1,
+        "ref": [
+            "[ECS Task Networking]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-networking.html>"
+        ]
+    },
+    "ecsTaskDefinitionExecutionRole": {
+        "category": "S",
+        "^description": "No execution role: {$COUNT} of your ECS task definitions do not have an execution role configured. The execution role grants ECS agent permissions to pull images and publish logs. Without it, tasks may fail or lack observability.",
+        "shortDesc": "Configure task execution role",
+        "criticality": "M",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 0,
+        "needFullTest": 0,
+        "ref": [
+            "[ECS Task Execution Role]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html>"
+        ]
+    },
+    "ecsTaskDefinitionResourceLimits": {
+        "category": "P",
+        "^description": "No resource limits: {$COUNT} of your ECS task definitions have containers without CPU or memory limits. Setting resource limits prevents a single container from consuming all host resources and ensures predictable performance.",
+        "shortDesc": "Set CPU and memory limits",
+        "criticality": "M",
+        "downtime": 0,
+        "slowness": 1,
+        "additionalCost": 0,
+        "needFullTest": 0,
+        "ref": [
+            "[ECS Task Size]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html#task_size>"
+        ]
+    },
+    "ecsServiceRunningCount": {
+        "category": "R",
+        "^description": "Tasks not running: {$COUNT} of your ECS services have a running count below the desired count. This indicates tasks are failing to start or crashing, impacting availability.",
+        "shortDesc": "Running count below desired count",
+        "criticality": "H",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 0,
+        "needFullTest": 0,
+        "ref": [
+            "[ECS Troubleshooting]<https://docs.aws.amazon.com/AmazonECS/latest/developerguide/troubleshooting.html>"
+        ]
+    },
+    "ecsTaskDefinitionPrivileged": {
+        "category": "S",
+        "^description": "Privileged containers: {$COUNT} of your ECS task definitions have containers running in privileged mode. Privileged containers have root-level access to the host, significantly increasing the blast radius of a compromise.",
+        "shortDesc": "Disable privileged mode on containers",
+        "criticality": "H",
+        "downtime": 0,
+        "slowness": 0,
+        "additionalCost": 0,
+        "needFullTest": 1,
+        "ref": [
+            "[ECS Security Best Practices]<https://docs.aws.amazon.com/AmazonECS/latest/bestpracticesguide/security-tasks-containers.html>"
+        ]
+    }
+}
